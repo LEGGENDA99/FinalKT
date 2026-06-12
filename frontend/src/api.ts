@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:3000';
 
-
 export interface SignResponse {
     id: number;
     message: string;
@@ -39,13 +38,12 @@ export interface ErrorResponse {
     error: string;
 }
 
-
 export async function sign(name: string): Promise<SignResponse | ErrorResponse> {
     try {
-        const response = await axios.post(`${API_URL}/sign`, { name });
+        const response = await axios.post<SignResponse>(`${API_URL}/sign`, { name });
         return response.data;
     } catch (error: any) {
-        if (error.response) {
+        if (error.response?.data?.error) {
             return { error: error.response.data.error };
         }
         return { error: 'Ошибка соединения с сервером' };
@@ -54,10 +52,10 @@ export async function sign(name: string): Promise<SignResponse | ErrorResponse> 
 
 export async function check(name: string): Promise<CheckResponse | ErrorResponse> {
     try {
-        const response = await axios.post(`${API_URL}/check`, { name });
+        const response = await axios.post<CheckResponse>(`${API_URL}/check`, { name });
         return response.data;
     } catch (error: any) {
-        if (error.response) {
+        if (error.response?.data?.error) {
             return { error: error.response.data.error };
         }
         return { error: 'Ошибка соединения с сервером' };
@@ -66,10 +64,10 @@ export async function check(name: string): Promise<CheckResponse | ErrorResponse
 
 export async function createUser(name: string, surname: string): Promise<CreateResponse | ErrorResponse> {
     try {
-        const response = await axios.post(`${API_URL}/create`, { name, surname });
+        const response = await axios.post<CreateResponse>(`${API_URL}/create`, { name, surname });
         return response.data;
     } catch (error: any) {
-        if (error.response) {
+        if (error.response?.data?.error) {
             return { error: error.response.data.error };
         }
         return { error: 'Ошибка соединения с сервером' };
@@ -78,10 +76,10 @@ export async function createUser(name: string, surname: string): Promise<CreateR
 
 export async function addPet(id: number, pet: string): Promise<PetResponse | ErrorResponse> {
     try {
-        const response = await axios.post(`${API_URL}/pet`, { id, pet });
+        const response = await axios.post<PetResponse>(`${API_URL}/pet`, { id, pet });
         return response.data;
     } catch (error: any) {
-        if (error.response) {
+        if (error.response?.data?.error) {
             return { error: error.response.data.error };
         }
         return { error: 'Ошибка соединения с сервером' };
@@ -90,10 +88,10 @@ export async function addPet(id: number, pet: string): Promise<PetResponse | Err
 
 export async function addColors(id: number, colors: string[]): Promise<ColorsResponse | ErrorResponse> {
     try {
-        const response = await axios.post(`${API_URL}/colors`, { id, colors });
+        const response = await axios.post<ColorsResponse>(`${API_URL}/colors`, { id, colors });
         return response.data;
     } catch (error: any) {
-        if (error.response) {
+        if (error.response?.data?.error) {
             return { error: error.response.data.error };
         }
         return { error: 'Ошибка соединения с сервером' };
